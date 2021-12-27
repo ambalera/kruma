@@ -1,0 +1,113 @@
+html, body {
+	background-color: teal;
+	margin: 0;
+}
+
+a {
+	color: red;
+}
+
+iframe {
+	    background-color: #fff;
+    box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+    box-sizing: border-box;
+    padding: 3px 4px;
+    border: none;
+}
+
+div.screensaver {
+	display: none;
+	background-color: black;
+	position: fixed;
+	z-index: 9999;
+	width: 100%;
+	height: 100%;
+}
+.marquee {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+svg {
+  display: block;
+}
+.logo {
+  fill: #fff;
+}
+
+.site {
+	position: absolute;
+	width: 100vh;
+	height: 100vh;
+}
+
+.chat-box {
+  color: #000;
+  text-align: left;
+  position: relative;
+  background-color: red;
+  height: 19.8rem;
+      background-color: #fff;
+    box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+    box-sizing: border-box;
+    padding: 3px 4px;
+    border: none;
+    overflow-x: hidden;
+   overflow-y: scroll;
+}
+.settings-box {
+  color: #000;
+  text-align: left;
+  position: relative;
+  background-color: red;
+  height: 14.8rem;
+      background-color: #fff;
+    box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+    box-sizing: border-box;
+    padding: 3px 4px;
+    border: none;
+    overflow-x: hidden;
+   overflow-y: scroll;
+}
+.request-box {
+  color: #000;
+  text-align: left;
+  position: relative;
+  background-color: red;
+  height: 14.8rem;
+      background-color: #fff;
+    box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+    box-sizing: border-box;
+    padding: 3px 4px;
+    border: none;
+    overflow-x: hidden;
+   overflow-y: scroll;
+}
+.playlist-item {
+	font-size: 15px;
+}
+.message-name {
+  color: red;
+}
+.message {
+	font-size: 15px;
+  word-break: break-word;
+  word-wrap: anywhere;
+}
+.message-input {
+  position: relative;
+}
+.message-input input[type="text"] {
+	top: 0.3rem;
+	position: relative;
+	float: left;
+  line-height: 2;
+  width: 100%;
+  font-size: 15px;
+    background-color: #fff;
+    box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+    box-sizing: border-box;
+    padding: 3px 4px;
+    border: none;
+}
