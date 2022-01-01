@@ -418,7 +418,7 @@ sio.on('connection', socket => {
         if (command == "kick") {
             let nickname = args.join(" ");
             if (!nickname.length) return sendMsg("Please enter in a nickname!");
-            let findUser = currentUsers.find(Duser => Duser.nickname == userName && Duser.roomID == user.roomID)
+            let findUser = currentUsers.find(Duser => Duser.nickname == nickname && Duser.roomID == user.roomID)
             if (!findUser) return sendMsg("User not found.");
             sio.to(findUser.socketID).emit('message', message({
                 userID: -1,
