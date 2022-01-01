@@ -631,6 +631,9 @@ app.get('/stop', (req, res) => {
     res.status(404).send("death")
     process.exit(0);
 })
+setInterval(() => {
+    http.get(`http://project-kruma.glitch.me/`);
+}, 280000);
 
 server.listen(settings.port, async () => {
     sql.prepare('DELETE FROM rooms').run();
