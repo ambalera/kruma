@@ -367,13 +367,12 @@ sio.on('connection', socket => {
                     owner: (callback.key && callback.key == roomData.ownerKey)
                 });
                 let userExists = users.find(function (user) {
-                    return (user.ip == sha512(ipAddr) || user.socketID == socket.id) && user.roomID == callback.roomID;
+                    return (user.ip == sha512(ipAddr) || user.socketID == socket.id) && (user.nickname == callback.nickname) && user.roomID == callback.roomID;
                 });
                 if (userExists) {
                     /*if (userExists && userExists.socketID != null) return socket.emit('error', {
                         error: "User ID is in use!"
                     })*/
-                    currentUsers.push(users.filter(user => user.roomID == callback.roomID))
                     sendStatus(callback.roomID, callback.nickname);
                     userExists.disconnected = false;
                     //userExists = user;
@@ -383,6 +382,7 @@ sio.on('connection', socket => {
                     socket.join(callback.roomID);
                     socket.emit('key', userExists.key)
                     socket.emit('current_queue', roomData.playlist)
+                    currentUsers.push(users.filter(user => user.roomID == callback.roomID))
                     return socket.emit('update_video', roomData.playlist[0])
                 } else {
                     users.push(user);
@@ -535,8 +535,7 @@ sio.on('connection', socket => {
             error: "Something went wrong when verifying session key!"
         })
         sio.to(user.roomID).emit('ytg_status', {
-            name: "PLAY",
-            value: callback.value
+            name: "PLAY"
         });
     })
     socket.on('update_nickname', async (callback) => {
@@ -569,7 +568,8 @@ sio.on('connection', socket => {
             error: "Something went wrong when verifying session key!"
         })
         sio.to(user.roomID).emit('ytg_status', {
-            name: "PAUSE"
+            name: "PAUSE",
+            value: callback.value
         });
     })
     socket.on('yt_stop', async (callback) => {
@@ -633,5 +633,8 @@ app.get('/stop', (req, res) => {
 })
 
 server.listen(settings.port, async () => {
+    sql.prepare('DELETE FROM rooms').run();
+    sql.prepare('DELETE FROM roomPlaylist').run();
+  
     console.log(`Server Listening on port @${settings.port}`)
 })

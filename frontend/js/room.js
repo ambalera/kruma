@@ -82,14 +82,14 @@ function onPlayerStateChange(event) {
     console.debug(`[YT] Player State has changed to ${event.data}`)
     switch (event.data) {
         case YT.PlayerState.PLAYING:
-            socket.emit('yt_play', {
-                value: player.getCurrentTime(),
-                ...player.socketData
-            });
+            socket.emit('yt_play');
             break;
         case YT.PlayerState.PAUSED:
             //case YT.PlayerState.BUFFERING:
-            socket.emit('yt_pause', player.socketData);
+            socket.emit('yt_pause', {
+                value: player.getCurrentTime(),
+                ...player.socketData
+            });
             break;
         case YT.PlayerState.ENDED:
             //case YT.PlayerState.BUFFERING:
@@ -229,10 +229,10 @@ async function init(player) {
             if (!player) return console.log("Not playing link because player isn't available.");
             switch (callback.name) {
                 case "PLAY":
-                    player.seekTo(callback.value);
                     player.playVideo();
                     break;
                 case "PAUSE":
+                    player.seekTo(callback.value);
                     player.pauseVideo();
                     break;
                 case "TIME":
