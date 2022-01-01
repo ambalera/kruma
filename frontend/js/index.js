@@ -89,7 +89,7 @@ function init() {
             status.innerText = "Creating room..."
             localStorage.setItem("spkey", response.data.key)
             localStorage.setItem('tempData', roomPass);
-            window.location.href = `${githubPage}/room/?ID=${roomID}`
+            window.location.href = `${githubPage}/room/?ID=${response.data.roomID}`
         } catch (e) {
             console.error(e)
             status.innerText = e.response.data.error
