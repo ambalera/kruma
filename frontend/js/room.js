@@ -102,7 +102,7 @@ function onPlayerStateChange(event) {
 
 function redirectHome() {
     //window.location.href = "index.html"
-    window.location.href = "/"
+    window.location.href = githubPage
 }
 async function init(player) {
     let nickname = localStorage.getItem("nickname");
