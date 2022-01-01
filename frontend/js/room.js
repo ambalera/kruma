@@ -106,7 +106,8 @@ function redirectHome() {
 }
 async function init(player) {
     let nickname = localStorage.getItem("nickname");
-    const roomID = findGetParameter("roomID")
+    const pathSlashes = window.location.pathname.split('/');
+    const roomID = pathSlashes[2]
     if (nickname == null) {
         redirectHome()
         return;
