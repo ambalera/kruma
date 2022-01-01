@@ -56,7 +56,7 @@ function init() {
             })
             status.innerText = "Joining room..."
 
-            window.location.href = `${githubPage}/room/${roomID}`
+            window.location.href = `${githubPage}/room/?ID=${roomID}`
         } catch (e) {
             localStorage.removeItem('tempData')
             console.error(e)
@@ -89,7 +89,7 @@ function init() {
             status.innerText = "Creating room..."
             localStorage.setItem("spkey", response.data.key)
             localStorage.setItem('tempData', roomPass);
-            window.location.href = `${githubPage}/room/${roomID}`
+            window.location.href = `${githubPage}/room/?ID=${roomID}`
         } catch (e) {
             console.error(e)
             status.innerText = e.response.data.error
