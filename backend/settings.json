@@ -1,3 +1,11 @@
 {
-    "port": 3000
+    "port": 3000,
+    "ratelimit": {
+        "chat": {
+            "max": 10,
+            "per": 5,
+            "message": "imma lock you out because youre typing too much xdd",
+            "othermsg": "you're typing too fast! you can send another message in %seconds%s"
+        }
+    }
 }

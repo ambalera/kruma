@@ -1,3 +1,4 @@
+<!-- can i prettify this please -->
 <!DOCTYPE html>
 <!-- amber -->
 <html>
@@ -6,10 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>kruma - watch yt w friends</title>
   <link rel="stylesheet" href="https://unpkg.com/98.css">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="assets/monitor_windows.png">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" type="image/png" href="../assets/monitor_windows.png">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+  <script type="text/javascript" src="../js/config.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script type="text/javascript" src="js/dvd.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script type="text/javascript" src="../js/dvd.js"></script>
+  <script type="text/javascript" src="../js/room.js"></script>
 </head>
 <body>
 <div class="screensaver">
@@ -19,7 +25,7 @@
 </div>
 <div class="site">
 	<center>
-<div class="window" style="width:94rem;position: fixed;top: 1rem;left: 1rem;height: 8rem;">
+<div class="window" style="width:80rem;position: fixed;top: 1rem;left: 0.5rem;height: 8rem;">
   <div class="title-bar">
     <div class="title-bar-text"><span style="font-size: 15px;">kruma - a <a href="https://github.com/FireMario211">firee</a> & <a href="https://github.com/ppleatr">ppleatr</a> project</span></div>
     	<div class="title-bar-controls">
@@ -29,9 +35,9 @@
     		</div>
   		</div>
   			<div class="window-body" style="min-height: 100%;">
-   				<h3>room: (room name)</h3>
+   				<h3 id="roomTitle">room: (room name)</h3>
    				<div class="video-window">
-<div class="window" style="width: 94rem;float: left;left: 0.5rem;position: fixed;top: 10rem;">
+<div class="window" style="width: 80rem;float: left;left: 0.5rem;position: fixed;top: 10rem;">
   <div class="title-bar">
     <div class="title-bar-text">video player</div>
     <div class="title-bar-controls">
@@ -41,11 +47,12 @@
     </div>
   </div>
   <div class="window-body">
-    <iframe width="1260" height="708.75" src="https://www.youtube.com/embed/0Ii3IWPEaz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <!--<iframe id="video-window" width="1260" height="708.75" src="https://www.youtube.com/embed/0Ii3IWPEaz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
+	<div id="video-window"></div>
   </div>
 </div>
 					<br>
-<div class="window" style="width: 40rem;float: right;position: fixed;left: 95rem;top: 21rem;">
+<div class="window" style="width: 36rem;float: right;position: fixed;left: 82rem;top: 15rem;">
   <div class="title-bar">
     <div class="title-bar-text">chat</div>
     <div class="title-bar-controls">
@@ -55,7 +62,8 @@
     </div>
   </div>
   <div class="window-body">
-		<div class="chat-box">
+		<div class="chat-box" id="messages">
+			<!--<div class="message"><b><span class="message-name">Khajiit: </span>this is a test</b></div>
 			<div class="message"><b><span class="message-name">Khajiit: </span>this is a test</b></div>
 			<div class="message"><b><span class="message-name">Khajiit: </span>this is a test</b></div>
 			<div class="message"><b><span class="message-name">Khajiit: </span>this is a test</b></div>
@@ -75,15 +83,16 @@
 			<div class="message"><b><span class="message-name">Khajiit: </span>this is a test</b></div>
 			<div class="message"><b><span class="message-name">Khajiit: </span>this is a test</b></div>
 			<div class="message"><b><span class="message-name">Khajiit: </span>this is a test</b></div>
-			<div class="message"><b><span class="message-name">Khajiit: </span>this is a test</b></div>
-			<div class="message"><b><span class="message-name">Khajiit: </span>this is a test</b></div>
+			<div class="message"><b><span class="message-name">Khajiit: </span>this is a test</b></div>-->
 		</div>
-		<div class="message-input"><input type="text" name="message-input"></div>
+		<form id="message-form">
+			<div class="message-input"><input type="text" name="message-input" id="message-input" autocomplete="off"></div>
+		</form>
 		<br><br>
   </div>
 </div>
 <br>
-<div class="window" style="width: 40rem;float: right;position: fixed;left: 94rem;top: 46rem;">
+<div class="window" style="width: 36rem;float: right;position: fixed;left: 82rem;top: 40rem;">
   <div class="title-bar">
     <div class="title-bar-text">request video & playlist</div>
     <div class="title-bar-controls">
@@ -93,19 +102,20 @@
     </div>
   </div>
   <div class="window-body">
-  	<div class="request-input"><label for="request-input"><b>request (put in youtube url): </b></label><input type="text" name="request-input" style="width:20rem"></div>
-		<div class="request-box">
-			<div class="playlist-item"><b>1. neco arc plays "smells like teen spirit from nyavermind - 0:26 (requested by khajiit)</b></div>
+	  <form id="requestForm">
+  	<div class="request-input"><label for="request-input"><b>request (put in youtube url): </b></label><input type="text" name="request-input" style="width:20rem" id="requestInput"></div></form>
+		<div class="request-box" id="requests">
+			<!--<div class="playlist-item"><b>1. neco arc plays "smells like teen spirit from nyavermind - 0:26 (requested by khajiit)</b></div>
 			<div class="playlist-item" style="background-color: silver;"><b>2. neco arc plays "smells like teen spirit from nyavermind - 0:26 (requested by khajiit)</b></div>
 			<div class="playlist-item"><b>3. neco arc plays "smells like teen spirit from nyavermind - 0:26 (requested by khajiit)</b></div>
 			<div class="playlist-item" style="background-color: silver;"><b>4. neco arc plays "smells like teen spirit from nyavermind - 0:26 (requested by khajiit)</b></div>
 			<div class="playlist-item"><b>5. neco arc plays "smells like teen spirit from nyavermind - 0:26 (requested by khajiit)</b></div>
 			<div class="playlist-item" style="background-color: silver;"><b>6. neco arc plays "smells like teen spirit from nyavermind - 0:26 (requested by khajiit)</b></div>
-			<div class="playlist-item"><b>7. neco arc plays "smells like teen spirit from nyavermind - 0:26 (requested by khajiit)</b></div>
+			<div class="playlist-item"><b>7. neco arc plays "smells like teen spirit from nyavermind - 0:26 (requested by khajiit)</b></div>-->
 		</div>
   </div>
 </div>
-<div class="window" style="width: 40rem;float: right;position: fixed;left: 96rem;top: 3rem;">
+<div class="window" style="width: 36rem;float: right;position: fixed;left: 82rem;top: 1rem;">
   <div class="title-bar">
     <div class="title-bar-text">room settings</div>
     <div class="title-bar-controls">
@@ -117,15 +127,21 @@
   <div class="window-body">
 		<div class="settings-box">
 			<b>
-				<label for="room-name">room name: </label>
-				<input type="text" name="room-name">
-				<button>change</button>
-				<p>room id: </p>
-				<p>room password: roompassword<button>SHOW</button></p>
+				<p id="roomID">room id: </p>
+				<div id="ownerOnly">
+					<form id="roomForm">
+						<label for="room-name">room name: </label>
+						<input type="text" name="room-name" id="roomName">
+						<button>change</button>
+						<p id="roomPass">room password: roompassword<button>SHOW</button></p>
+					</form>
+				</div>
 				<hr>
-				<label for="nickname">new nickname: </label>
-				<input type="text" name="nickname"><br>
-				<button style="position: relative;left: 3rem;">change nickname</button>
+				<form id="nick">
+					<label for="nickname">new nickname: </label>
+					<input type="text" name="nickname" id="newNick"><br>
+					<button style="position: relative;left: 3rem;">change nickname</button>
+				</form>
 			</b>
 		</div>
   </div>

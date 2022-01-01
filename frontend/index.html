@@ -9,7 +9,10 @@
 	<link rel="stylesheet" href="style.css">
 	<link rel="icon" type="image/png" href="assets/monitor_windows.png">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript" src="js/config.js"></script>
 	<script type="text/javascript" src="js/dvd.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
 <div class="screensaver">
@@ -39,14 +42,14 @@
     </div>
   </div>
   <div class="window-body">
-    <form>
+    <form id="setNickname">
     	<div class="field-row">
     		<label for="nickname"><b>nickname: </b></label>
-    		<input type="text" name="nickname">
+    		<input type="text" name="nickname" id="nickname">
     	</div>
     	<br>
     	<center><button><b>set nickname</b></button></center>
-    	<p id="nickname-status">jhello</p>
+    	<p id="nickname-status"></p>
     </form>
   </div>
 </div>
@@ -61,18 +64,18 @@
     </div>
   </div>
   <div class="window-body">
-    <form>
+    <form id="joinRoom">
         <div class="field-row">
     	<label for="room-id"><b>room id:</b></label>
-    	<input type="text" name="room-id">
+    	<input type="text" name="room-id" id="jroomID">
     </div>
     <div class="field-row">
     	<label for="room-pass"><b>room password:</b></label>
-    	<input type="password" name="room-pass">
+    	<input type="password" name="room-pass" id="jroomPass" autocomplete="off">
     </div>
     <br>
     <center><button><b>join room</b></button></center>
-    <p id="join-status">jhello</p>
+    <p id="join-status"></p>
     </form>
   </div>
   </div>
@@ -87,22 +90,22 @@
     </div>
   </div>
   <div class="window-body">
-    <form>
+    <form id="createRoom">
         <div class="field-row">
     	<label for="room-name"><b>room name:</b></label>
-    	<input type="text" name="room-name">
+    	<input type="text" name="room-name" id="croomName" autocomplete="off">
     </div>
     <div class="field-row">
     	<label for="room-pass"><b>room password:</b></label>
-    	<input type="password" name="room-pass">
+    	<input type="password" name="room-pass" id="croomPass" autocomplete="off">
     </div>
     <div class="field-row">
     	<label for="room-confirm-pass"><b>confirm room password:</b></label>
-    	<input type="password" name="room-confirm-pass">
+    	<input type="password" name="room-confirm-pass" id="croomConfirmPass" autocomplete="off">
     </div>
     <br>
     <center><button><b>create room</b></button></center>
-    <p id="create-status">jhello</p>
+    <p id="create-status"></p>
     </form>
   </div>
   </div>
